@@ -1,5 +1,12 @@
 #!/bin/sh
 
+#title          :auto_commit.sh
+#description    :This script will commit a dummy
+#author         :swlee
+#date           :2019-12-11
+#version        :1.0.1
+#==============================================================================
+
 # Absolute path to this script, e.g. /home/user/bin/foo.sh
 # Absolute path this script is in, thus /home/user/bin
 
