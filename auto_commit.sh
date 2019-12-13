@@ -10,7 +10,8 @@
 # Absolute path to this script, e.g. /home/user/bin/foo.sh
 # Absolute path this script is in, thus /home/user/bin
 
-DIR_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
+#https://unix.stackexchange.com/questions/151547/linux-set-date-through-command-line
+DIR_PATH="$(pwd)"
 DUMMY_FILE="${DIR_PATH}/dummy"
 COMMIT_CNT=0
 DAY_AGO=0
@@ -59,7 +60,8 @@ function validate_params() {
 function update_current_date() {
     OLD_LANG=$LANG
     LANG="POSIX"
-    CURRENT_DATE=$(echo $(date))
+    #get date n days ago
+    CURRENT_DATE=$(echo $(date -v-${DAY_AGO}d))
     LANG=$OLD_LANG 
     echo "CURRENT_DATE : ${CURRENT_DATE}"
 }
@@ -78,9 +80,15 @@ function commit_with_current_date() {
 }
 
 validate_params
+update_current_date
 echo "COMMIT_CNT is ${COMMIT_CNT} DAY_AGO is ${DAY_AGO}"
 
-#make_dummy_change
-#update_current_date
-#commit_with_current_date
+i=0
+while [ $i -lt $COMMIT_CNT ]
+do
+    make_dummy_change
+    commit_with_current_date
+    i=$(($i+1))
+done
+
 
